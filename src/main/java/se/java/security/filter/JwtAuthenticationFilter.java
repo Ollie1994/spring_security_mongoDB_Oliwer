@@ -82,11 +82,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
-
         }
         // continue to next filter chain
         filterChain.doFilter(request, response);
     }
+
+
+
+
 
 }
 
