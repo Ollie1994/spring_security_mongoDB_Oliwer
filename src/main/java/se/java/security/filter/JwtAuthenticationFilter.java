@@ -55,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         }
-        // If we have a jwt and the suer is not authenticated
+        // If we have a jwt and the user is not authenticated
         if (jwt != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             try {
                 // Extract username from token
