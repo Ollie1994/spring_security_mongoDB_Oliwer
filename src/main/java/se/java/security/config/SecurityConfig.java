@@ -26,7 +26,7 @@ public class SecurityConfig {
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
-
+    // add jwt filter before standard filter
     // create AuthenticationManager which is the "boss" of the authentication process
     @Bean
     public AuthenticationManager authenticationManager(
@@ -46,8 +46,11 @@ public class SecurityConfig {
                 // define URL based rules
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/products/**").hasRole("ADMIN")
+                        .requestMatchers("/orders/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/auth/**").permitAll()
+                        //.requestMatchers("/products/**").permitAll()
                         // any other requests the user need to be logged
                         .anyRequest().authenticated()
                 )
@@ -57,7 +60,7 @@ public class SecurityConfig {
                 )
                 // add jwt filter before standard filter
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+        return  http.build();
     }
 
     // cors config
@@ -81,6 +84,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
-
 }
-
