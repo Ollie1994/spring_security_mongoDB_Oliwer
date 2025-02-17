@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public class OrderDTO {
+
     @NotNull(message = "Customer id is required")
     private String customerId;
 
